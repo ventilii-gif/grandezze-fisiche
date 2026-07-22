@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Impara le grandezze fisiche, le unità di misura, le equivalenze di aree, volumi e grandezze derivate. Con quiz di teoria ed esercizi graduati." />
+  <title>Grandezze Fisiche · Impara le unità di misura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8F%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Salta al contenuto</a>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-logo" aria-hidden="true">📏</span>
+      <span class="brand-text">Grandezze&nbsp;Fisiche</span>
+    </div>
+
+    <nav class="main-nav" aria-label="Sezioni">
+      <button class="nav-btn is-active" data-section="home">Introduzione</button>
+      <button class="nav-btn" data-section="fondamentali">Fondamentali</button>
+      <button class="nav-btn" data-section="aree-volumi">Aree e volumi</button>
+      <button class="nav-btn" data-section="derivate">Grandezze derivate</button>
+      <button class="nav-btn" data-section="quiz">Quiz</button>
+    </nav>
+
+    <button id="theme-toggle" class="theme-toggle" aria-label="Cambia tema chiaro/scuro" title="Cambia tema">
+      <span class="theme-icon">🌙</span>
+    </button>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================= HOME ============================= -->
+    <section id="home" class="section is-active">
+      <div class="hero">
+        <h1>Che cos'è una <span class="hl">grandezza fisica</span>?</h1>
+        <p class="lead">
+          Una <strong>grandezza fisica</strong> è tutto ciò che possiamo
+          <strong>misurare</strong>: la lunghezza di un banco, la massa di uno zaino,
+          il tempo di una corsa, la temperatura dell'acqua…
+        </p>
+      </div>
+
+      <div class="card highlight-card">
+        <h2>L'idea di base</h2>
+        <p>
+          Misurare significa <strong>confrontare</strong> una grandezza con
+          una quantità di riferimento chiamata <strong>unità di misura</strong>.
+          Il risultato di una misura è sempre formato da due parti:
+        </p>
+        <div class="measure-example">
+          <span class="measure-number">2,5</span>
+          <span class="measure-unit">m</span>
+        </div>
+        <p class="measure-labels">
+          <span>← il <strong>numero</strong> (quante volte)</span>
+          <span>l'<strong>unità</strong> di misura →</span>
+        </p>
+        <p class="note">
+          Senza l'unità, il numero da solo non ha significato:
+          «lungo 3» non dice nulla, «lungo 3&nbsp;m» sì!
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Le 7 grandezze fondamentali del Sistema Internazionale (SI)</h2>
+        <p>
+          Gli scienziati di tutto il mondo hanno scelto <strong>7 grandezze
+          fondamentali</strong>. Tutte le altre (dette <em>derivate</em>) si ottengono
+          combinando queste.
+        </p>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr><th>Grandezza</th><th>Unità</th><th>Simbolo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Lunghezza</td><td>metro</td><td>m</td></tr>
+              <tr><td>Massa</td><td>chilogrammo</td><td>kg</td></tr>
+              <tr><td>Tempo</td><td>secondo</td><td>s</td></tr>
+              <tr><td>Temperatura</td><td>kelvin</td><td>K</td></tr>
+              <tr><td>Intensità di corrente</td><td>ampere</td><td>A</td></tr>
+              <tr><td>Quantità di sostanza</td><td>mole</td><td>mol</td></tr>
+              <tr><td>Intensità luminosa</td><td>candela</td><td>cd</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Come useremo questa app</h2>
+        <ol class="steps">
+          <li><strong>Fondamentali</strong> — multipli e sottomultipli e le equivalenze «lineari».</li>
+          <li><strong>Aree e volumi</strong> — perché qui i fattori diventano 100 e 1000.</li>
+          <li><strong>Grandezze derivate</strong> — densità, velocità e altre.</li>
+          <li><strong>Quiz</strong> — allenati con teoria ed esercizi graduati e incoraggianti!</li>
+        </ol>
+        <div class="cta-row">
+          <button class="btn btn-primary" data-goto="fondamentali">Inizia dalle fondamentali →</button>
+          <button class="btn btn-ghost" data-goto="quiz">Vai subito al quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= FONDAMENTALI ========================= -->
+    <section id="fondamentali" class="section">
+      <h1>Multipli e sottomultipli delle unità fondamentali</h1>
+      <p class="lead">
+        Un metro a volte è troppo grande (la distanza fra due città) o troppo piccolo
+        (lo spessore di un capello). Per questo usiamo i <strong>prefissi</strong>:
+        parole che moltiplicano o dividono l'unità per potenze di 10.
+      </p>
+
+      <div class="card">
+        <h2>La scala dei prefissi</h2>
+        <p>Ogni gradino verso l'alto <strong>moltiplica per 10</strong>, ogni gradino verso il basso <strong>divide per 10</strong>.</p>
+        <div class="table-scroll">
+          <table class="data-table prefix-table">
+            <thead>
+              <tr><th>Prefisso</th><th>Simbolo</th><th>Valore</th><th>Esempio (metro)</th></tr>
+            </thead>
+            <tbody>
+              <tr class="tier-up"><td>giga</td><td>G</td><td>1 000 000 000 = 10⁹</td><td>1 Gm</td></tr>
+              <tr class="tier-up"><td>mega</td><td>M</td><td>1 000 000 = 10⁶</td><td>1 Mm</td></tr>
+              <tr class="tier-up"><td>chilo</td><td>k</td><td>1 000 = 10³</td><td>1 km</td></tr>
+              <tr class="tier-up"><td>etto</td><td>h</td><td>100 = 10²</td><td>1 hm</td></tr>
+              <tr class="tier-up"><td>deca</td><td>da</td><td>10 = 10¹</td><td>1 dam</td></tr>
+              <tr class="tier-base"><td><strong>— unità —</strong></td><td>—</td><td>1 = 10⁰</td><td>1 m</td></tr>
+              <tr class="tier-down"><td>deci</td><td>d</td><td>0,1 = 10⁻¹</td><td>1 dm</td></tr>
+              <tr class="tier-down"><td>centi</td><td>c</td><td>0,01 = 10⁻²</td><td>1 cm</td></tr>
+              <tr class="tier-down"><td>milli</td><td>m</td><td>0,001 = 10⁻³</td><td>1 mm</td></tr>
+              <tr class="tier-down"><td>micro</td><td>µ</td><td>0,000001 = 10⁻⁶</td><td>1 µm</td></tr>
+              <tr class="tier-down"><td>nano</td><td>n</td><td>0,000000001 = 10⁻⁹</td><td>1 nm</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">
+          I gradini più usati a scuola (da km a mm) sono uno accanto all'altro e
+          differiscono di un fattore <strong>10</strong> l'uno dall'altro.
+        </p>
+      </div>
+
+      <div class="card highlight-card">
+        <h2>La regola d'oro delle equivalenze</h2>
+        <p>Per convertire, conta di <strong>quanti gradini</strong> ti sposti sulla scala:</p>
+        <ul class="rule-list">
+          <li>Scendo verso unità più piccole → <strong>moltiplico</strong> (il numero cresce).</li>
+          <li>Salgo verso unità più grandi → <strong>divido</strong> (il numero diminuisce).</li>
+        </ul>
+        <div class="worked">
+          <p class="worked-title">Esempio guidato: <strong>3,4 km = ? m</strong></p>
+          <p>Dal km al m scendo di 3 gradini (km → hm → dam → m): moltiplico per 10 tre volte, cioè × 1000.</p>
+          <p class="worked-result">3,4 km = 3,4 × 1000 = <strong>3400 m</strong></p>
+        </div>
+        <div class="worked">
+          <p class="worked-title">Esempio guidato: <strong>250 g = ? kg</strong></p>
+          <p>Dal g al kg salgo di 3 gradini: divido per 1000.</p>
+          <p class="worked-result">250 g = 250 ÷ 1000 = <strong>0,25 kg</strong></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Convertitore interattivo</h2>
+        <p>Scegli una grandezza, inserisci un valore e osserva come cambia il numero cambiando unità.</p>
+        <div id="linear-converter" class="converter"></div>
+      </div>
+
+      <div class="cta-row">
+        <button class="btn btn-primary" data-goto="aree-volumi">Avanti: aree e volumi →</button>
+      </div>
+    </section>
+
+    <!-- ========================= AREE E VOLUMI ========================= -->
+    <section id="aree-volumi" class="section">
+      <h1>Unità di misura di aree e volumi</h1>
+      <p class="lead">
+        Qui c'è il «trucco» che confonde tutti: per le aree i gradini valgono
+        <strong>100</strong> e per i volumi <strong>1000</strong>. Vediamo perché è logico!
+      </p>
+
+      <div class="card highlight-card">
+        <h2>Perché le aree vanno di 100 in 100</h2>
+        <p>
+          Un'area si misura in <strong>metri quadrati</strong> (m²): è la superficie di un
+          quadrato di lato 1&nbsp;m. Ma 1&nbsp;m = 10&nbsp;dm, quindi quel quadrato ha lato
+          10&nbsp;dm e contiene <strong>10 × 10 = 100</strong> quadratini da 1&nbsp;dm².
+        </p>
+        <p class="worked-result">1 m² = 100 dm² &nbsp;&nbsp;(ogni gradino: × 100 oppure ÷ 100)</p>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Unità</th><th>km²</th><th>hm²</th><th>dam²</th><th>m²</th><th>dm²</th><th>cm²</th><th>mm²</th></tr></thead>
+            <tbody>
+              <tr><td>fattore per scendere</td><td colspan="6">ogni passo × 100 →</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Curiosità: 1 hm² si chiama <strong>ettaro (ha)</strong> e 1 dam² si chiama <strong>ara (a)</strong>.</p>
+      </div>
+
+      <div class="card highlight-card">
+        <h2>Perché i volumi vanno di 1000 in 1000</h2>
+        <p>
+          Un volume si misura in <strong>metri cubi</strong> (m³): un cubo di lato 1&nbsp;m.
+          Poiché 1&nbsp;m = 10&nbsp;dm, il cubo contiene
+          <strong>10 × 10 × 10 = 1000</strong> cubetti da 1&nbsp;dm³.
+        </p>
+        <p class="worked-result">1 m³ = 1000 dm³ &nbsp;&nbsp;(ogni gradino: × 1000 oppure ÷ 1000)</p>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Unità</th><th>km³</th><th>m³</th><th>dm³</th><th>cm³</th><th>mm³</th></tr></thead>
+            <tbody>
+              <tr><td>fattore per scendere</td><td colspan="4">ogni passo × 1000 →</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Il collegamento con i litri</h2>
+        <p>La capacità dei liquidi si misura in <strong>litri (L)</strong>, ma è solo un volume travestito:</p>
+        <ul class="rule-list">
+          <li><strong>1 L = 1 dm³</strong></li>
+          <li><strong>1 mL = 1 cm³</strong></li>
+          <li><strong>1 m³ = 1000 L</strong></li>
+        </ul>
+        <div class="worked">
+          <p class="worked-title">Esempio: una bottiglia da <strong>1,5 L</strong></p>
+          <p class="worked-result">1,5 L = 1,5 dm³ = 1500 cm³ = 1500 mL</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Confronto: quanto vale un gradino?</h2>
+        <div class="compare-grid">
+          <div class="compare-item"><span class="compare-big">×10</span><span>Lunghezze<br>(1D)</span></div>
+          <div class="compare-item"><span class="compare-big">×100</span><span>Aree<br>(2D)</span></div>
+          <div class="compare-item"><span class="compare-big">×1000</span><span>Volumi<br>(3D)</span></div>
+        </div>
+        <p class="note">Il fattore è 10 elevato al numero di dimensioni: 10¹, 10², 10³.</p>
+      </div>
+
+      <div class="card">
+        <h2>Convertitore interattivo</h2>
+        <h3 class="converter-subtitle">Aree (fattore ×100)</h3>
+        <div id="area-converter" class="converter"></div>
+        <h3 class="converter-subtitle">Volumi e litri (fattore ×1000)</h3>
+        <div id="volume-converter" class="converter"></div>
+      </div>
+
+      <div class="cta-row">
+        <button class="btn btn-primary" data-goto="derivate">Avanti: grandezze derivate →</button>
+      </div>
+    </section>
+
+    <!-- ========================= DERIVATE ========================= -->
+    <section id="derivate" class="section">
+      <h1>Grandezze derivate: densità e velocità</h1>
+      <p class="lead">
+        Le grandezze <strong>derivate</strong> nascono combinando quelle fondamentali.
+        La loro unità è una «combinazione» di unità di base.
+      </p>
+
+      <div class="card highlight-card">
+        <h2>Densità</h2>
+        <p>La densità dice quanta <strong>massa</strong> è «impacchettata» in un certo <strong>volume</strong>.</p>
+        <div class="formula-box">
+          d = <span class="frac"><span class="frac-top">m</span><span class="frac-bot">V</span></span>
+          &nbsp;&nbsp;→&nbsp;&nbsp; si misura in <strong>kg/m³</strong> oppure <strong>g/cm³</strong>
+        </div>
+        <ul class="rule-list">
+          <li>Conversione chiave: <strong>1 g/cm³ = 1000 kg/m³</strong></li>
+          <li>L'acqua ha densità 1 g/cm³ = 1000 kg/m³.</li>
+        </ul>
+        <div class="worked">
+          <p class="worked-title">Esempio: 300 g di ferro occupano 38 cm³. Qual è la densità?</p>
+          <p class="worked-result">d = 300 g ÷ 38 cm³ ≈ 7,9 g/cm³ = 7900 kg/m³</p>
+        </div>
+      </div>
+
+      <div class="card highlight-card">
+        <h2>Velocità</h2>
+        <p>La velocità dice quanto <strong>spazio</strong> si percorre in un certo <strong>tempo</strong>.</p>
+        <div class="formula-box">
+          v = <span class="frac"><span class="frac-top">s</span><span class="frac-bot">t</span></span>
+          &nbsp;&nbsp;→&nbsp;&nbsp; si misura in <strong>m/s</strong> oppure <strong>km/h</strong>
+        </div>
+        <ul class="rule-list">
+          <li>Da m/s a km/h: <strong>× 3,6</strong></li>
+          <li>Da km/h a m/s: <strong>÷ 3,6</strong></li>
+        </ul>
+        <div class="worked">
+          <p class="worked-title">Perché 3,6? Da dove viene?</p>
+          <p>1 m/s = 1 m in 1 s. In 1 ora (3600 s) percorro 3600 m = 3,6 km. Quindi 1 m/s = 3,6 km/h.</p>
+        </div>
+        <div class="worked">
+          <p class="worked-title">Esempio: un ciclista va a 36 km/h. Quanti m/s?</p>
+          <p class="worked-result">36 ÷ 3,6 = 10 m/s</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Altre grandezze derivate utili</h2>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Grandezza</th><th>Formula</th><th>Unità SI</th></tr></thead>
+            <tbody>
+              <tr><td>Area</td><td>lato × lato</td><td>m²</td></tr>
+              <tr><td>Volume</td><td>lato³</td><td>m³</td></tr>
+              <tr><td>Velocità</td><td>spazio / tempo</td><td>m/s</td></tr>
+              <tr><td>Accelerazione</td><td>Δvelocità / tempo</td><td>m/s²</td></tr>
+              <tr><td>Densità</td><td>massa / volume</td><td>kg/m³</td></tr>
+              <tr><td>Forza</td><td>massa × accelerazione</td><td>N (newton)</td></tr>
+              <tr><td>Pressione</td><td>forza / area</td><td>Pa (pascal)</td></tr>
+              <tr><td>Portata</td><td>volume / tempo</td><td>m³/s</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Convertitore interattivo (derivate)</h2>
+        <div id="derived-converter" class="converter"></div>
+      </div>
+
+      <div class="cta-row">
+        <button class="btn btn-primary" data-goto="quiz">Mettiti alla prova con il quiz →</button>
+      </div>
+    </section>
+
+    <!-- ========================= QUIZ ========================= -->
+    <section id="quiz" class="section">
+      <h1>Quiz di allenamento</h1>
+      <p class="lead">
+        Nessuna paura di sbagliare: qui si impara provando! Ogni risposta ti dà
+        una spiegazione. Scegli cosa allenare e il livello di difficoltà.
+      </p>
+
+      <div id="quiz-launcher" class="quiz-launcher">
+        <div class="quiz-choice">
+          <h2>1. Che cosa vuoi allenare?</h2>
+          <div class="chip-row" id="quiz-topic">
+            <button class="chip is-active" data-topic="teoria">📖 Teoria</button>
+            <button class="chip" data-topic="fondamentali">📏 Unità fondamentali</button>
+            <button class="chip" data-topic="aree-volumi">🧊 Aree e volumi</button>
+            <button class="chip" data-topic="derivate">⚡ Grandezze derivate</button>
+            <button class="chip" data-topic="misto">🎲 Misto</button>
+          </div>
+        </div>
+
+        <div class="quiz-choice" id="difficulty-choice">
+          <h2>2. Che livello?</h2>
+          <div class="chip-row" id="quiz-difficulty">
+            <button class="chip is-active" data-diff="facile">🌱 Facile</button>
+            <button class="chip" data-diff="medio">🔥 Medio</button>
+            <button class="chip" data-diff="difficile">🚀 Difficile</button>
+          </div>
+          <p class="note" id="difficulty-note">Per la teoria le domande sono a risposta multipla su tutti i livelli.</p>
+        </div>
+
+        <button class="btn btn-primary btn-lg" id="start-quiz">Inizia l'allenamento →</button>
+      </div>
+
+      <div id="quiz-runner" class="quiz-runner" hidden>
+        <div class="quiz-topbar">
+          <div class="quiz-progress">
+            <span id="quiz-counter">Domanda 1</span>
+            <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+          </div>
+          <div class="quiz-score">Punteggio: <strong id="quiz-score">0</strong></div>
+        </div>
+
+        <div class="quiz-card" id="quiz-card"><!-- question injected here --></div>
+
+        <div class="quiz-actions">
+          <button class="btn btn-ghost" id="quit-quiz">Termina</button>
+          <button class="btn btn-primary" id="next-question" hidden>Prossima →</button>
+        </div>
+      </div>
+
+      <div id="quiz-summary" class="quiz-summary" hidden><!-- summary injected here --></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Realizzato per imparare le grandezze fisiche · Sistema Internazionale (SI)</p>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

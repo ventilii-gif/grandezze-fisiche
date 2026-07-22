@@ -1,0 +1,473 @@
+/* =========================================================
+   Grandezze Fisiche — Foglio di stile
+   Tema chiaro (giorno) e scuro (notte) tramite variabili CSS
+   ========================================================= */
+
+:root {
+  /* --- Tema chiaro (giorno) --- */
+  --bg: #f4f7fb;
+  --bg-soft: #e9eef6;
+  --surface: #ffffff;
+  --surface-2: #f7f9fc;
+  --text: #14213d;
+  --text-soft: #4a5568;
+  --border: #dbe3ee;
+  --primary: #2563eb;
+  --primary-strong: #1d4ed8;
+  --primary-soft: #dbeafe;
+  --accent: #0891b2;
+  --success: #16a34a;
+  --success-soft: #dcfce7;
+  --error: #dc2626;
+  --error-soft: #fee2e2;
+  --highlight: #fff8e6;
+  --highlight-border: #f6d67a;
+  --shadow: 0 6px 24px rgba(20, 33, 61, 0.08);
+  --shadow-sm: 0 2px 8px rgba(20, 33, 61, 0.06);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+}
+
+html[data-theme="dark"] {
+  /* --- Tema scuro (notte) --- */
+  --bg: #0e1526;
+  --bg-soft: #131c30;
+  --surface: #182236;
+  --surface-2: #1f2b42;
+  --text: #eaf0fb;
+  --text-soft: #a9b6cc;
+  --border: #2b3a55;
+  --primary: #60a5fa;
+  --primary-strong: #93c5fd;
+  --primary-soft: #1e3a5f;
+  --accent: #22d3ee;
+  --success: #4ade80;
+  --success-soft: #14331f;
+  --error: #f87171;
+  --error-soft: #3a1518;
+  --highlight: #2a2410;
+  --highlight-border: #6b5a1e;
+  --shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--primary);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 var(--radius-sm) 0;
+  z-index: 100;
+}
+.skip-link:focus { left: 0; }
+
+/* ---------------- Header / navigazione ---------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.7rem 1.2rem;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+.brand-logo { font-size: 1.5rem; }
+
+.main-nav {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.nav-btn:hover { background: var(--bg-soft); color: var(--text); }
+.nav-btn.is-active { background: var(--primary); color: #fff; }
+
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.25rem;
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.theme-toggle:hover { transform: rotate(20deg) scale(1.05); }
+
+/* ---------------- Layout sezioni ---------------- */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.2rem 4rem;
+}
+
+.section { display: none; animation: fadeIn 0.35s ease; }
+.section.is-active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  line-height: 1.2;
+  margin: 0 0 0.6rem;
+  letter-spacing: -0.02em;
+}
+h2 {
+  font-size: 1.3rem;
+  margin: 0 0 0.7rem;
+  letter-spacing: -0.01em;
+}
+.lead {
+  font-size: 1.1rem;
+  color: var(--text-soft);
+  max-width: 65ch;
+  margin: 0 0 1.5rem;
+}
+.hl { color: var(--primary); }
+
+/* ---------------- Card ---------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.highlight-card {
+  background: var(--highlight);
+  border-color: var(--highlight-border);
+}
+html[data-theme="dark"] .highlight-card { background: var(--surface-2); }
+
+.hero { margin-bottom: 1.5rem; }
+
+.note {
+  font-size: 0.92rem;
+  color: var(--text-soft);
+  background: var(--surface-2);
+  border-left: 3px solid var(--accent);
+  padding: 0.6rem 0.9rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 1rem 0 0;
+}
+
+/* ---------------- Esempio di misura ---------------- */
+.measure-example {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.4rem;
+  font-weight: 800;
+  margin: 1rem 0 0.3rem;
+}
+.measure-number { font-size: 3rem; color: var(--primary); }
+.measure-unit { font-size: 2rem; color: var(--accent); }
+.measure-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* ---------------- Tabelle ---------------- */
+.table-scroll { overflow-x: auto; margin: 0.5rem 0; }
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  min-width: 320px;
+}
+.data-table th, .data-table td {
+  text-align: left;
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+.data-table th {
+  background: var(--surface-2);
+  font-weight: 700;
+}
+.data-table tbody tr:hover { background: var(--surface-2); }
+
+.prefix-table .tier-up td:first-child { color: var(--primary); font-weight: 600; }
+.prefix-table .tier-down td:first-child { color: var(--accent); font-weight: 600; }
+.prefix-table .tier-base { background: var(--primary-soft); }
+
+/* ---------------- Liste / steps ---------------- */
+.steps, .rule-list { margin: 0.5rem 0; padding-left: 1.3rem; }
+.steps li, .rule-list li { margin-bottom: 0.5rem; }
+
+/* ---------------- Esempi svolti ---------------- */
+.worked {
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1.1rem;
+  margin: 1rem 0 0;
+}
+.worked-title { margin: 0 0 0.4rem; }
+.worked-result {
+  font-weight: 700;
+  color: var(--success);
+  margin: 0.4rem 0 0;
+}
+
+/* ---------------- Formula box ---------------- */
+.formula-box {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  font-size: 1.3rem;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.2rem;
+  margin: 0.6rem 0;
+}
+.frac { display: inline-flex; flex-direction: column; text-align: center; vertical-align: middle; }
+.frac-top { border-bottom: 2px solid currentColor; padding: 0 0.4rem; }
+.frac-bot { padding: 0 0.4rem; }
+
+/* ---------------- Confronto dimensioni ---------------- */
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+.compare-item {
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 1rem 0.5rem;
+}
+.compare-big {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0.3rem;
+}
+
+/* ---------------- Convertitore interattivo ---------------- */
+.converter { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.converter-subtitle { font-size: 1rem; margin: 1.2rem 0 0.2rem; color: var(--accent); }
+.converter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: flex-end;
+}
+.converter-field { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; min-width: 130px; }
+.converter-field label { font-size: 0.85rem; font-weight: 600; color: var(--text-soft); }
+.converter input, .converter select {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+.converter input:focus, .converter select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+.converter-equals { font-size: 1.5rem; font-weight: 800; color: var(--text-soft); padding-bottom: 0.5rem; }
+.converter-result {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: var(--primary-soft);
+  color: var(--text);
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+}
+.converter-result strong { color: var(--primary-strong); }
+
+/* ---------------- Bottoni ---------------- */
+.btn {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-strong); transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--primary); border-color: var(--border); }
+.btn-ghost:hover { background: var(--bg-soft); }
+.btn-lg { font-size: 1.1rem; padding: 0.85rem 1.7rem; }
+.cta-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1rem; }
+
+/* ---------------- Quiz ---------------- */
+.quiz-launcher { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+.quiz-choice { margin-bottom: 1.5rem; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.chip:hover { border-color: var(--primary); }
+.chip.is-active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* Quiz runner */
+.quiz-runner { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow-sm); }
+.quiz-topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+.quiz-progress { flex: 1; min-width: 180px; }
+.quiz-progress span { font-size: 0.85rem; font-weight: 600; color: var(--text-soft); }
+.progress-track { height: 8px; background: var(--bg-soft); border-radius: 999px; overflow: hidden; margin-top: 0.3rem; }
+.progress-fill { height: 100%; width: 0; background: var(--primary); border-radius: 999px; transition: width 0.3s ease; }
+.quiz-score { font-size: 0.95rem; }
+
+.quiz-card { margin-bottom: 1.3rem; }
+.quiz-question { font-size: 1.25rem; font-weight: 700; margin: 0 0 1.1rem; }
+.quiz-question .q-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  background: var(--surface-2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.6rem;
+}
+
+.answer-options { display: flex; flex-direction: column; gap: 0.6rem; }
+.answer-btn {
+  text-align: left;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.answer-btn:hover:not(:disabled) { border-color: var(--primary); transform: translateX(2px); }
+.answer-btn:disabled { cursor: default; opacity: 0.95; }
+.answer-btn.correct { background: var(--success-soft); border-color: var(--success); color: var(--text); font-weight: 700; }
+.answer-btn.wrong { background: var(--error-soft); border-color: var(--error); }
+
+.answer-numeric { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+.answer-numeric input {
+  font-family: inherit;
+  font-size: 1.1rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  flex: 1;
+  min-width: 140px;
+}
+.answer-numeric input:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
+.answer-numeric .unit-label { font-size: 1.15rem; font-weight: 700; color: var(--accent); }
+
+.feedback {
+  margin-top: 1.1rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.98rem;
+  animation: fadeIn 0.3s ease;
+}
+.feedback.good { background: var(--success-soft); border: 1px solid var(--success); }
+.feedback.bad { background: var(--error-soft); border: 1px solid var(--error); }
+.feedback-head { font-weight: 800; margin: 0 0 0.3rem; }
+.feedback.good .feedback-head { color: var(--success); }
+.feedback.bad .feedback-head { color: var(--error); }
+.feedback-body { margin: 0; color: var(--text); }
+
+.quiz-actions { display: flex; justify-content: space-between; gap: 0.8rem; }
+
+/* Riepilogo */
+.quiz-summary { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem 1.5rem; text-align: center; box-shadow: var(--shadow-sm); }
+.summary-emoji { font-size: 3.5rem; }
+.summary-score { font-size: 2.2rem; font-weight: 800; color: var(--primary); margin: 0.3rem 0; }
+.summary-msg { font-size: 1.1rem; color: var(--text-soft); margin-bottom: 1.3rem; }
+.summary-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+
+/* ---------------- Footer ---------------- */
+.site-footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: var(--text-soft);
+  font-size: 0.88rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 640px) {
+  .main-nav { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; }
+  .nav-btn { white-space: nowrap; }
+  .measure-number { font-size: 2.2rem; }
+  .compare-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
