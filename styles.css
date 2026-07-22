@@ -302,6 +302,31 @@ html[data-theme="dark"] .highlight-card { background: var(--surface-2); }
 .converter { margin-top: 0.5rem; margin-bottom: 0.5rem; }
 .converter-subtitle { font-size: 1rem; margin: 1.2rem 0 0.2rem; color: var(--accent); }
 .converter-category { max-width: 260px; margin-bottom: 0.9rem; }
+.converter-note {
+  margin: 0.9rem 0 0.6rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: var(--surface-2);
+  border-left: 3px solid var(--accent);
+  padding: 0.6rem 0.9rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.unit-legend {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+.unit-legend li { line-height: 1.4; }
+.legend-unit {
+  display: inline-block;
+  min-width: 3.6em;
+  font-weight: 700;
+  color: var(--primary);
+}
 .converter-row {
   display: flex;
   flex-wrap: wrap;

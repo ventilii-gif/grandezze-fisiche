@@ -142,6 +142,8 @@
         </div>
       </div>
       <div class="converter-result" id="${mountId}-out" aria-live="polite"></div>
+      <p class="converter-note" id="${mountId}-note"></p>
+      <ul class="unit-legend" id="${mountId}-legend"></ul>
     `;
 
     const catEl = document.getElementById(`${mountId}-cat`);
@@ -149,9 +151,12 @@
     const fromEl = document.getElementById(`${mountId}-from`);
     const toEl = document.getElementById(`${mountId}-to`);
     const outEl = document.getElementById(`${mountId}-out`);
+    const noteEl = document.getElementById(`${mountId}-note`);
+    const legendEl = document.getElementById(`${mountId}-legend`);
 
     function populateUnits() {
-      const units = categories[catNames[catEl.value]];
+      const cat = categories[catNames[catEl.value]];
+      const units = cat.units;
       const opts = units
         .map((u) => `<option value="${u.factor}">${u.label}</option>`)
         .join("");
@@ -159,6 +164,12 @@
       toEl.innerHTML = opts;
       fromEl.selectedIndex = 0;
       toEl.selectedIndex = Math.min(1, units.length - 1);
+
+      // nota della grandezza + legenda con il significato di ogni unità
+      noteEl.innerHTML = cat.note ? `💡 ${cat.note}` : "";
+      legendEl.innerHTML = units
+        .map((u) => `<li><span class="legend-unit">${u.label}</span> ${u.hint || ""}</li>`)
+        .join("");
     }
 
     function update() {
@@ -232,31 +243,82 @@
   // Convertitore grandezze derivate: si sceglie prima la grandezza,
   // poi le unità di partenza e arrivo (coerenti con quella grandezza).
   // factor = valore dell'unità espresso nell'unità di base della grandezza.
+  // Ogni grandezza ha una "note" (che cos'è + esempio) e ogni unità un "hint".
   buildDerivedConverter("derived-converter", {
-    "Velocità": [
-      { label: "m/s", factor: 1 },
-      { label: "km/h", factor: 1 / 3.6 },
-      { label: "cm/s", factor: 0.01 }
-    ],
-    "Densità": [
-      { label: "kg/m³", factor: 1 },
-      { label: "g/cm³", factor: 1000 },
-      { label: "kg/L", factor: 1000 },
-      { label: "g/L", factor: 1 }
-    ],
-    "Pressione": [
-      { label: "Pa", factor: 1 },
-      { label: "hPa", factor: 100 },
-      { label: "kPa", factor: 1000 },
-      { label: "bar", factor: 100000 },
-      { label: "atm", factor: 101325 }
-    ],
-    "Portata": [
-      { label: "m³/s", factor: 1 },
-      { label: "L/s", factor: 0.001 },
-      { label: "L/min", factor: 0.001 / 60 },
-      { label: "m³/h", factor: 1 / 3600 }
-    ]
+    "Velocità": {
+      note: "Velocità = spazio ÷ tempo. Un pedone cammina a circa 1,4 m/s (5 km/h).",
+      units: [
+        { label: "m/s", factor: 1, hint: "unità SI: metri percorsi in 1 secondo" },
+        { label: "km/h", factor: 1 / 3.6, hint: "chilometri all'ora; ÷ 3,6 per avere i m/s" },
+        { label: "cm/s", factor: 0.01, hint: "centimetri al secondo (velocità piccole)" },
+        { label: "nodo (kn)", factor: 1852 / 3600, hint: "usato in mare: 1 nodo = 1,852 km/h" }
+      ]
+    },
+    "Densità": {
+      note: "Densità = massa ÷ volume. L'acqua vale 1 g/cm³ = 1000 kg/m³.",
+      units: [
+        { label: "kg/m³", factor: 1, hint: "unità SI" },
+        { label: "g/cm³", factor: 1000, hint: "molto usata a scuola: 1 g/cm³ = 1000 kg/m³" },
+        { label: "kg/L", factor: 1000, hint: "chilogrammi per litro (= g/cm³)" },
+        { label: "g/L", factor: 1, hint: "grammi per litro (= kg/m³)" }
+      ]
+    },
+    "Pressione": {
+      note: "Pressione = forza ÷ area. La pressione atmosferica al livello del mare è circa 1 atm ≈ 1013 hPa.",
+      units: [
+        { label: "Pa", factor: 1, hint: "pascal, unità SI = 1 N/m²" },
+        { label: "hPa", factor: 100, hint: "ettopascal, usato in meteorologia" },
+        { label: "kPa", factor: 1000, hint: "chilopascal = 1000 Pa" },
+        { label: "bar", factor: 100000, hint: "1 bar ≈ pressione atmosferica ≈ 100 000 Pa" },
+        { label: "atm", factor: 101325, hint: "atmosfera: pressione media al livello del mare" },
+        { label: "mmHg", factor: 133.322, hint: "millimetri di mercurio (pressione del sangue)" }
+      ]
+    },
+    "Portata": {
+      note: "Portata = volume ÷ tempo: quanto fluido passa in un certo tempo. Un rubinetto eroga circa 0,1–0,2 L/s.",
+      units: [
+        { label: "m³/s", factor: 1, hint: "unità SI" },
+        { label: "L/s", factor: 0.001, hint: "litri al secondo" },
+        { label: "L/min", factor: 0.001 / 60, hint: "litri al minuto" },
+        { label: "m³/h", factor: 1 / 3600, hint: "metri cubi all'ora" }
+      ]
+    },
+    "Forza": {
+      note: "Forza = massa × accelerazione. La forza-peso di 1 kg sulla Terra è circa 9,8 N.",
+      units: [
+        { label: "N", factor: 1, hint: "newton, unità SI" },
+        { label: "daN", factor: 10, hint: "decanewton ≈ peso di 1 kg (circa 9,8 N)" },
+        { label: "kN", factor: 1000, hint: "chilonewton = 1000 N" }
+      ]
+    },
+    "Energia / Lavoro": {
+      note: "Energia e lavoro si misurano nella stessa unità. Una barretta di cioccolato ha circa 500 kJ.",
+      units: [
+        { label: "J", factor: 1, hint: "joule, unità SI" },
+        { label: "kJ", factor: 1000, hint: "chilojoule = 1000 J" },
+        { label: "cal", factor: 4.186, hint: "caloria: 1 cal = 4,186 J" },
+        { label: "kcal", factor: 4186, hint: "chilocaloria (le «Calorie» degli alimenti)" },
+        { label: "Wh", factor: 3600, hint: "wattora: energia di 1 W per 1 ora = 3600 J" },
+        { label: "kWh", factor: 3.6e6, hint: "chilowattora: bolletta della luce" }
+      ]
+    },
+    "Potenza": {
+      note: "Potenza = energia ÷ tempo: quanto lavoro si compie ogni secondo. Una lampadina LED usa circa 10 W.",
+      units: [
+        { label: "W", factor: 1, hint: "watt, unità SI = 1 J/s" },
+        { label: "kW", factor: 1000, hint: "chilowatt = 1000 W" },
+        { label: "CV", factor: 735.5, hint: "cavallo vapore: 1 CV ≈ 735,5 W (motori)" },
+        { label: "MW", factor: 1e6, hint: "megawatt = 1 000 000 W (centrali)" }
+      ]
+    },
+    "Accelerazione": {
+      note: "Accelerazione = variazione di velocità ÷ tempo. La gravità terrestre vale g ≈ 9,81 m/s².",
+      units: [
+        { label: "m/s²", factor: 1, hint: "unità SI: la velocità cambia di 1 m/s ogni secondo" },
+        { label: "cm/s²", factor: 0.01, hint: "centimetri al secondo quadrato" },
+        { label: "g (gravità)", factor: 9.81, hint: "accelerazione di gravità: 1 g ≈ 9,81 m/s²" }
+      ]
+    }
   });
 
   /* ---------------- QUIZ ---------------- */
