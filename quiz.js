@@ -400,14 +400,20 @@
   const N_QUESTIONS = 8;
 
   function buildTheory() {
-    return shuffle(THEORY).slice(0, N_QUESTIONS).map((t) => ({
-      type: "mc",
-      tag: "Teoria",
-      prompt: t.q,
-      options: t.options,
-      correct: t.correct,
-      why: t.why
-    }));
+    return shuffle(THEORY).slice(0, N_QUESTIONS).map((t) => {
+      // Mescola l'ordine delle opzioni così la risposta corretta
+      // non è sempre nella stessa posizione. Usa un flag per essere
+      // robusto anche se due opzioni avessero lo stesso testo.
+      const opts = shuffle(t.options.map((text, i) => ({ text, correct: i === t.correct })));
+      return {
+        type: "mc",
+        tag: "Teoria",
+        prompt: t.q,
+        options: opts.map((o) => o.text),
+        correct: opts.findIndex((o) => o.correct),
+        why: t.why
+      };
+    });
   }
 
   function buildQuiz(topic, difficulty) {
