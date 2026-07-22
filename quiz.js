@@ -318,8 +318,8 @@
   // --- Grandezze derivate ---
   function genDerived(difficulty) {
     const kinds = difficulty === "facile"
-      ? ["velocita", "densita"]
-      : ["velocita", "densita", "portata", "pressione", "accelerazione"];
+      ? ["velocita", "densita", "forza"]
+      : ["velocita", "densita", "portata", "pressione", "accelerazione", "forza", "energia", "potenza"];
     const kind = pick(kinds);
 
     if (kind === "velocita") {
@@ -379,6 +379,76 @@
         `Una forza di <strong>${fmt(F)} N</strong> agisce su un'area di <strong>${fmt(A)} m²</strong>. Qual è la pressione in Pa?`,
         "Pa", F / A,
         `La pressione è forza ÷ area: ${fmt(F)} ÷ ${fmt(A)} = <strong>${fmt(F / A)} Pa</strong>.`);
+    }
+
+    if (kind === "forza") {
+      // conversione N <-> kN/daN nei livelli più alti, altrimenti F = m × a
+      if (Math.random() < 0.4 && difficulty !== "facile") {
+        const toN = Math.random() < 0.5;
+        if (toN) {
+          const val = pick([2, 3.5, 1.2, 5, 0.8]);
+          return numericQ("Grandezze derivate",
+            `Converti la forza: <strong>${fmt(val)} kN</strong> = ? N`,
+            "N", val * 1000,
+            `1 kN = 1000 N, quindi ${fmt(val)} × 1000 = <strong>${fmt(val * 1000)} N</strong>.`);
+        }
+        const val2 = pick([2000, 3500, 500, 4200, 800]);
+        return numericQ("Grandezze derivate",
+          `Converti la forza: <strong>${fmt(val2)} N</strong> = ? kN`,
+          "kN", val2 / 1000,
+          `Si divide per 1000: ${fmt(val2)} ÷ 1000 = <strong>${fmt(val2 / 1000)} kN</strong>.`);
+      }
+      // F = m × a
+      const m = pick([2, 3, 5, 10, 4, 8]);
+      const a = difficulty === "facile" ? pick([2, 3, 5, 10]) : pick([2.5, 9.8, 4, 6, 1.5]);
+      return numericQ("Grandezze derivate",
+        `Un corpo di massa <strong>${fmt(m)} kg</strong> subisce un'accelerazione di <strong>${fmt(a)} m/s²</strong>. Qual è la forza in N?`,
+        "N", m * a,
+        `La forza è massa × accelerazione: ${fmt(m)} × ${fmt(a)} = <strong>${fmt(m * a)} N</strong>.`);
+    }
+
+    if (kind === "energia") {
+      // conversione (kJ→J, kcal→cal) oppure lavoro L = F × s
+      const r = Math.random();
+      if (r < 0.25) {
+        const val = pick([2, 3.5, 1.2, 5, 0.75]);
+        return numericQ("Grandezze derivate",
+          `Converti l'energia: <strong>${fmt(val)} kJ</strong> = ? J`,
+          "J", val * 1000,
+          `1 kJ = 1000 J, quindi ${fmt(val)} × 1000 = <strong>${fmt(val * 1000)} J</strong>.`);
+      }
+      if (r < 0.45) {
+        const val = pick([2, 1.5, 3, 0.5, 4]);
+        return numericQ("Grandezze derivate",
+          `Converti l'energia: <strong>${fmt(val)} kcal</strong> = ? cal`,
+          "cal", val * 1000,
+          `1 kcal = 1000 cal, quindi ${fmt(val)} × 1000 = <strong>${fmt(val * 1000)} cal</strong>.`);
+      }
+      // L = F × s
+      const F = pick([10, 20, 50, 100, 25, 8]);
+      const s = pick([2, 3, 4, 5, 10]);
+      return numericQ("Grandezze derivate",
+        `Una forza di <strong>${fmt(F)} N</strong> sposta un oggetto di <strong>${fmt(s)} m</strong> nella sua direzione. Qual è il lavoro in J?`,
+        "J", F * s,
+        `Il lavoro è forza × spostamento: ${fmt(F)} × ${fmt(s)} = <strong>${fmt(F * s)} J</strong>.`);
+    }
+
+    if (kind === "potenza") {
+      // conversione kW→W oppure P = L / t
+      if (Math.random() < 0.35) {
+        const val = pick([2, 1.5, 3, 0.8, 5]);
+        return numericQ("Grandezze derivate",
+          `Converti la potenza: <strong>${fmt(val)} kW</strong> = ? W`,
+          "W", val * 1000,
+          `1 kW = 1000 W, quindi ${fmt(val)} × 1000 = <strong>${fmt(val * 1000)} W</strong>.`);
+      }
+      // P = L / t
+      const L = pick([100, 200, 600, 300, 900, 1200]);
+      const t = pick([2, 3, 4, 5, 6]);
+      return numericQ("Grandezze derivate",
+        `Un motore compie un lavoro di <strong>${fmt(L)} J</strong> in <strong>${fmt(t)} s</strong>. Qual è la potenza in W?`,
+        "W", L / t,
+        `La potenza è lavoro ÷ tempo: ${fmt(L)} ÷ ${fmt(t)} = <strong>${fmt(L / t)} W</strong>.`);
     }
 
     // accelerazione
