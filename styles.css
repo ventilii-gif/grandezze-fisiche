@@ -301,6 +301,7 @@ html[data-theme="dark"] .highlight-card { background: var(--surface-2); }
 /* ---------------- Convertitore interattivo ---------------- */
 .converter { margin-top: 0.5rem; margin-bottom: 0.5rem; }
 .converter-subtitle { font-size: 1rem; margin: 1.2rem 0 0.2rem; color: var(--accent); }
+.converter-category { max-width: 260px; margin-bottom: 0.9rem; }
 .converter-row {
   display: flex;
   flex-wrap: wrap;

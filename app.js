@@ -110,6 +110,81 @@
     update();
   }
 
+  // Convertitore per grandezze derivate con selettore della grandezza.
+  // "categories" = { "Nome grandezza": [ {label, factor}, ... ], ... }
+  function buildDerivedConverter(mountId, categories) {
+    const mount = document.getElementById(mountId);
+    if (!mount) return;
+
+    const catNames = Object.keys(categories);
+    const catOptions = catNames
+      .map((name, i) => `<option value="${i}">${name}</option>`)
+      .join("");
+
+    mount.innerHTML = `
+      <div class="converter-field converter-category">
+        <label for="${mountId}-cat">Grandezza</label>
+        <select id="${mountId}-cat">${catOptions}</select>
+      </div>
+      <div class="converter-row">
+        <div class="converter-field">
+          <label for="${mountId}-val">Valore</label>
+          <input id="${mountId}-val" type="number" inputmode="decimal" value="1" step="any" />
+        </div>
+        <div class="converter-field">
+          <label for="${mountId}-from">Da</label>
+          <select id="${mountId}-from"></select>
+        </div>
+        <span class="converter-equals">=</span>
+        <div class="converter-field">
+          <label for="${mountId}-to">A</label>
+          <select id="${mountId}-to"></select>
+        </div>
+      </div>
+      <div class="converter-result" id="${mountId}-out" aria-live="polite"></div>
+    `;
+
+    const catEl = document.getElementById(`${mountId}-cat`);
+    const valEl = document.getElementById(`${mountId}-val`);
+    const fromEl = document.getElementById(`${mountId}-from`);
+    const toEl = document.getElementById(`${mountId}-to`);
+    const outEl = document.getElementById(`${mountId}-out`);
+
+    function populateUnits() {
+      const units = categories[catNames[catEl.value]];
+      const opts = units
+        .map((u) => `<option value="${u.factor}">${u.label}</option>`)
+        .join("");
+      fromEl.innerHTML = opts;
+      toEl.innerHTML = opts;
+      fromEl.selectedIndex = 0;
+      toEl.selectedIndex = Math.min(1, units.length - 1);
+    }
+
+    function update() {
+      const v = parseFloat(valEl.value);
+      const fromF = parseFloat(fromEl.value);
+      const toF = parseFloat(toEl.value);
+      const fromLabel = fromEl.options[fromEl.selectedIndex].text;
+      const toLabel = toEl.options[toEl.selectedIndex].text;
+      if (!isFinite(v)) {
+        outEl.textContent = "Inserisci un valore numerico.";
+        return;
+      }
+      const result = v * (fromF / toF);
+      outEl.innerHTML = `${fmt(v)} ${fromLabel} = <strong>${fmt(result)} ${toLabel}</strong>`;
+    }
+
+    catEl.addEventListener("change", () => { populateUnits(); update(); });
+    [valEl, fromEl, toEl].forEach((el) => {
+      el.addEventListener("input", update);
+      el.addEventListener("change", update);
+    });
+
+    populateUnits();
+    update();
+  }
+
   // Convertitore lineare (lunghezze — con prefissi principali)
   buildConverter("linear-converter", {
     units: [
@@ -154,14 +229,34 @@
     defaultTo: 2    // L
   });
 
-  // Convertitore grandezze derivate (velocità + densità)
-  buildConverter("derived-converter", {
-    units: [
-      { label: "m/s", factor: 3.6 },   // rispetto a km/h
-      { label: "km/h", factor: 1 }
+  // Convertitore grandezze derivate: si sceglie prima la grandezza,
+  // poi le unità di partenza e arrivo (coerenti con quella grandezza).
+  // factor = valore dell'unità espresso nell'unità di base della grandezza.
+  buildDerivedConverter("derived-converter", {
+    "Velocità": [
+      { label: "m/s", factor: 1 },
+      { label: "km/h", factor: 1 / 3.6 },
+      { label: "cm/s", factor: 0.01 }
     ],
-    defaultFrom: 0,
-    defaultTo: 1
+    "Densità": [
+      { label: "kg/m³", factor: 1 },
+      { label: "g/cm³", factor: 1000 },
+      { label: "kg/L", factor: 1000 },
+      { label: "g/L", factor: 1 }
+    ],
+    "Pressione": [
+      { label: "Pa", factor: 1 },
+      { label: "hPa", factor: 100 },
+      { label: "kPa", factor: 1000 },
+      { label: "bar", factor: 100000 },
+      { label: "atm", factor: 101325 }
+    ],
+    "Portata": [
+      { label: "m³/s", factor: 1 },
+      { label: "L/s", factor: 0.001 },
+      { label: "L/min", factor: 0.001 / 60 },
+      { label: "m³/h", factor: 1 / 3600 }
+    ]
   });
 
   /* ---------------- QUIZ ---------------- */
