@@ -176,6 +176,80 @@
       ],
       correct: 0,
       why: "La velocità si misura in m/s: i kg sono l'unità della massa, non della velocità."
+    },
+    {
+      q: "Con quale formula si calcola la forza?",
+      options: [
+        "F = massa × accelerazione",
+        "F = massa / accelerazione",
+        "F = massa × velocità",
+        "F = massa / volume"
+      ],
+      correct: 0,
+      why: "La forza è massa per accelerazione (secondo principio della dinamica); si misura in newton (N)."
+    },
+    {
+      q: "Qual è l'unità di misura della forza nel SI?",
+      options: ["newton (N)", "joule (J)", "watt (W)", "pascal (Pa)"],
+      correct: 0,
+      why: "La forza si misura in newton (N). 1 N è la forza che dà a 1 kg un'accelerazione di 1 m/s²."
+    },
+    {
+      q: "Circa quanto vale la forza-peso di una massa di 1 kg sulla Terra?",
+      options: ["circa 9,8 N", "circa 1 N", "circa 100 N", "circa 1000 N"],
+      correct: 0,
+      why: "Peso = massa × g, con g ≈ 9,8 m/s². Quindi 1 kg «pesa» circa 9,8 N."
+    },
+    {
+      q: "Il lavoro (energia) si calcola come…",
+      options: [
+        "forza × spostamento",
+        "forza / spostamento",
+        "forza × tempo",
+        "forza / tempo"
+      ],
+      correct: 0,
+      why: "Il lavoro è forza per spostamento nella direzione della forza; si misura in joule (J)."
+    },
+    {
+      q: "Qual è l'unità di misura dell'energia (e del lavoro) nel SI?",
+      options: ["joule (J)", "newton (N)", "watt (W)", "ampere (A)"],
+      correct: 0,
+      why: "Energia e lavoro si misurano entrambi in joule (J)."
+    },
+    {
+      q: "Le «Calorie» indicate sulle etichette degli alimenti corrispondono a…",
+      options: ["chilocalorie (kcal)", "calorie (cal)", "joule (J)", "watt (W)"],
+      correct: 0,
+      why: "Le «Calorie» alimentari sono in realtà chilocalorie: 1 kcal = 1000 cal ≈ 4186 J."
+    },
+    {
+      q: "Che cos'è la potenza?",
+      options: [
+        "L'energia impiegata nell'unità di tempo (energia / tempo)",
+        "La forza per lo spostamento",
+        "La massa per l'accelerazione",
+        "La massa per il volume"
+      ],
+      correct: 0,
+      why: "La potenza è energia (o lavoro) diviso tempo; si misura in watt (W). 1 W = 1 J/s."
+    },
+    {
+      q: "Qual è l'unità di misura della potenza nel SI?",
+      options: ["watt (W)", "joule (J)", "newton (N)", "pascal (Pa)"],
+      correct: 0,
+      why: "La potenza si misura in watt (W): 1 W corrisponde a 1 joule al secondo."
+    },
+    {
+      q: "Il chilowattora (kWh) che leggi in bolletta misura una…",
+      options: [
+        "energia",
+        "potenza",
+        "forza",
+        "corrente elettrica"
+      ],
+      correct: 0,
+      why: "Il kWh è un'energia (potenza × tempo): 1 kWh = 1 kW per 1 ora = 3 600 000 J."
     }
   ];
 
