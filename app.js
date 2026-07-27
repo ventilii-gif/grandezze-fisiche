@@ -340,6 +340,21 @@
     );
   }
 
+  const recordInfoEl = document.getElementById("quiz-record-info");
+  function updateRecordInfo() {
+    const best = getBest(selTopic, selDiff);
+    if (best === null) {
+      recordInfoEl.hidden = true;
+      return;
+    }
+    const etichetta = selTopic === "teoria"
+      ? topicLabel(selTopic)
+      : `${topicLabel(selTopic)} · ${selDiff}`;
+    recordInfoEl.innerHTML = `🏅 Il tuo record in «${etichetta}»: <strong>${best} / ${window.QuizEngine.N_QUESTIONS}</strong>`;
+    recordInfoEl.hidden = false;
+  }
+  updateRecordInfo();
+
   topicRow.addEventListener("click", (e) => {
     const chip = e.target.closest(".chip");
     if (!chip) return;
@@ -350,6 +365,7 @@
     diffChoice.style.opacity = isTheory ? 0.5 : 1;
     diffChoice.style.pointerEvents = isTheory ? "none" : "auto";
     diffNote.hidden = !isTheory;
+    updateRecordInfo();
   });
 
   diffRow.addEventListener("click", (e) => {
@@ -357,6 +373,7 @@
     if (!chip) return;
     selDiff = chip.dataset.diff;
     selectChip(diffRow, "diff", selDiff);
+    updateRecordInfo();
   });
 
   // stato del quiz corrente
@@ -364,6 +381,31 @@
   let idx = 0;
   let score = 0;
   let answered = false;
+  let review = []; // { q, correct, userText } per ogni domanda risposta
+
+  // --- Record (punteggio migliore) salvato per argomento/livello ---
+  function bestKey(topic, diff) {
+    // per la teoria la difficoltà non conta
+    return topic === "teoria" ? "gf-best-teoria" : `gf-best-${topic}-${diff}`;
+  }
+  function getBest(topic, diff) {
+    try {
+      const v = parseInt(localStorage.getItem(bestKey(topic, diff)), 10);
+      return isNaN(v) ? null : v;
+    } catch (e) { return null; }
+  }
+  function setBest(topic, diff, value) {
+    try { localStorage.setItem(bestKey(topic, diff), String(value)); } catch (e) {}
+  }
+  function topicLabel(topic) {
+    return {
+      teoria: "Teoria",
+      fondamentali: "Unità fondamentali",
+      "aree-volumi": "Aree e volumi",
+      derivate: "Grandezze derivate",
+      misto: "Misto"
+    }[topic] || topic;
+  }
 
   const counterEl = document.getElementById("quiz-counter");
   const progressEl = document.getElementById("progress-fill");
@@ -389,7 +431,7 @@
 
   function startQuiz() {
     questions = buildQuiz(selTopic, selDiff);
-    idx = 0; score = 0; answered = false;
+    idx = 0; score = 0; answered = false; review = [];
     launcher.hidden = true;
     summary.hidden = true;
     runner.hidden = false;
@@ -438,6 +480,7 @@
       else if (i === chosen) b.classList.add("wrong");
     });
     if (correct) { score++; scoreEl.textContent = score; }
+    review.push({ q, correct, userText: q.options[chosen] });
     showFeedback(correct, q.why);
   }
 
@@ -468,6 +511,7 @@
       checkBtn.disabled = true;
       const correct = isCorrectNumeric(user, q.answer);
       if (correct) { score++; scoreEl.textContent = score; }
+      review.push({ q, correct, userText: `${input.value.trim()} ${q.unit}` });
       showFeedback(correct, q.why);
     }
 
@@ -507,14 +551,50 @@
       emoji = "🌱"; msg = "Ogni esperto è stato principiante. Rileggi la teoria e riprova: ce la farai!";
     }
 
+    // --- Record: aggiorna solo se il quiz è stato completato ---
+    let recordHtml = "";
+    if (!early && total > 0) {
+      const prevBest = getBest(selTopic, selDiff);
+      const isNewRecord = prevBest === null || score > prevBest;
+      if (isNewRecord) setBest(selTopic, selDiff, score);
+      const best = isNewRecord ? score : prevBest;
+      const etichetta = selTopic === "teoria"
+        ? topicLabel(selTopic)
+        : `${topicLabel(selTopic)} · ${selDiff}`;
+      recordHtml = isNewRecord
+        ? `<p class="summary-record new">🥇 Nuovo record! Miglior punteggio in «${etichetta}»: <strong>${best} / ${total}</strong></p>`
+        : `<p class="summary-record">🏅 Record in «${etichetta}»: <strong>${best} / ${total}</strong></p>`;
+    }
+
+    // --- Riepilogo delle domande sbagliate ---
+    const wrong = review.filter((r) => !r.correct);
+    let reviewHtml = "";
+    if (!early && wrong.length > 0) {
+      const items = wrong.map((r) => `
+        <li class="review-item">
+          <p class="review-q"><span class="q-tag">${r.q.tag}</span> ${r.q.prompt}</p>
+          <p class="review-your">La tua risposta: <span class="wrong-text">${r.userText}</span></p>
+          <p class="review-why">${r.q.why}</p>
+        </li>`).join("");
+      reviewHtml = `
+        <div class="review-block">
+          <h3 class="review-title">Ripassa le domande sbagliate (${wrong.length})</h3>
+          <ul class="review-list">${items}</ul>
+        </div>`;
+    } else if (!early && wrong.length === 0) {
+      reviewHtml = `<p class="review-perfect">🎯 Nessun errore: tutte corrette!</p>`;
+    }
+
     summary.innerHTML = `
       <div class="summary-emoji">${emoji}</div>
       <p class="summary-score">${score} / ${total}</p>
       <p class="summary-msg">${msg}</p>
+      ${recordHtml}
       <div class="summary-actions">
         <button class="btn btn-primary" id="retry-quiz">Allenati ancora</button>
         <button class="btn btn-ghost" id="back-launcher">Cambia argomento</button>
       </div>
+      ${reviewHtml}
     `;
     summary.hidden = false;
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -523,6 +603,7 @@
     document.getElementById("back-launcher").addEventListener("click", () => {
       summary.hidden = true;
       launcher.hidden = false;
+      updateRecordInfo();
     });
   }
 })();

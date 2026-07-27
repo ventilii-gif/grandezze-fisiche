@@ -476,6 +476,52 @@ html[data-theme="dark"] .highlight-card { background: var(--surface-2); }
 .summary-score { font-size: 2.2rem; font-weight: 800; color: var(--primary); margin: 0.3rem 0; }
 .summary-msg { font-size: 1.1rem; color: var(--text-soft); margin-bottom: 1.3rem; }
 .summary-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+.summary-record {
+  font-size: 1rem;
+  margin: 0 0 1.2rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  display: inline-block;
+}
+.summary-record.new {
+  background: var(--success-soft);
+  border: 1px solid var(--success);
+  font-weight: 700;
+}
+
+/* Record nella schermata iniziale */
+.record-info {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  background: var(--surface-2);
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+}
+
+/* Riepilogo domande sbagliate */
+.review-perfect {
+  margin: 1.5rem 0 0;
+  font-weight: 700;
+  color: var(--success);
+}
+.review-block { margin-top: 1.8rem; text-align: left; }
+.review-title { font-size: 1.1rem; margin: 0 0 0.9rem; text-align: center; }
+.review-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.9rem; }
+.review-item {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--error);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1.1rem;
+}
+.review-q { margin: 0 0 0.5rem; font-weight: 600; }
+.review-q .q-tag { margin-right: 0.4rem; }
+.review-your { margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--text-soft); }
+.review-your .wrong-text { color: var(--error); font-weight: 700; }
+.review-why { margin: 0; font-size: 0.95rem; }
 
 /* ---------------- Footer ---------------- */
 .site-footer {
