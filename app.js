@@ -246,7 +246,7 @@
   // Ogni grandezza ha una "note" (che cos'è + esempio) e ogni unità un "hint".
   buildDerivedConverter("derived-converter", {
     "Velocità": {
-      note: "Velocità = spazio ÷ tempo. Un pedone cammina a circa 1,4 m/s (5 km/h).",
+      note: "Velocità = Δspazio ÷ Δtempo (spazio percorso nel tempo). Un pedone cammina a circa 1,4 m/s (5 km/h).",
       units: [
         { label: "m/s", factor: 1, hint: "unità SI: metri percorsi in 1 secondo" },
         { label: "km/h", factor: 1 / 3.6, hint: "chilometri all'ora; ÷ 3,6 per avere i m/s" },
@@ -312,7 +312,7 @@
       ]
     },
     "Accelerazione": {
-      note: "Accelerazione = variazione di velocità ÷ tempo. La gravità terrestre vale g ≈ 9,81 m/s².",
+      note: "Accelerazione = Δvelocità ÷ Δtempo (variazione di velocità nel tempo). La gravità terrestre vale g ≈ 9,81 m/s².",
       units: [
         { label: "m/s²", factor: 1, hint: "unità SI: la velocità cambia di 1 m/s ogni secondo" },
         { label: "cm/s²", factor: 0.01, hint: "centimetri al secondo quadrato" },

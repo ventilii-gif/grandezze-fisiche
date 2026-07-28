@@ -156,9 +156,9 @@
     },
     {
       q: "Come si calcola la velocità?",
-      options: ["v = spazio / tempo", "v = tempo / spazio", "v = spazio × tempo", "v = massa / tempo"],
+      options: ["v = Δspazio / Δtempo", "v = Δtempo / Δspazio", "v = Δspazio × Δtempo", "v = massa / Δtempo"],
       correct: 0,
-      why: "La velocità è spazio percorso diviso tempo impiegato; unità SI: m/s."
+      why: "La velocità è lo spazio percorso (Δspazio) diviso il tempo impiegato (Δtempo); unità SI: m/s."
     },
     {
       q: "Per passare da m/s a km/h si…",
@@ -531,7 +531,7 @@
     return numericQ("Grandezze derivate",
       `Un'auto passa da 0 a <strong>${fmt(dv)} m/s</strong> in <strong>${fmt(t)} s</strong>. Qual è l'accelerazione in m/s²?`,
       "m/s²", dv / t,
-      `L'accelerazione è variazione di velocità ÷ tempo: ${fmt(dv)} ÷ ${fmt(t)} = <strong>${fmt(dv / t)} m/s²</strong>.`);
+      `L'accelerazione è Δvelocità ÷ Δtempo (variazione di velocità nel tempo): ${fmt(dv)} ÷ ${fmt(t)} = <strong>${fmt(dv / t)} m/s²</strong>.`);
   }
 
   function numericQ(tag, prompt, unit, answer, why) {
