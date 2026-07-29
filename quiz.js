@@ -40,11 +40,17 @@
     return Number(cleaned);
   }
 
-  // Confronto con tolleranza relativa (per gli esercizi numerici)
+  // Confronto per gli esercizi numerici. È corretto se la risposta è
+  // praticamente esatta (tolleranza relativa) OPPURE se coincide con il
+  // valore atteso arrotondato alla seconda cifra decimale: così chi
+  // arrotonda i risultati con decimali periodici (es. 27,78 al posto di
+  // 27,7777…) non viene penalizzato.
+  const round2 = (x) => Math.round((x + Number.EPSILON) * 100) / 100;
   function isCorrectNumeric(user, expected) {
     if (!isFinite(user)) return false;
-    if (expected === 0) return Math.abs(user) < 1e-9;
-    return Math.abs(user - expected) / Math.abs(expected) < 1e-4;
+    if (expected === 0) return Math.abs(user) < 5e-3;
+    if (Math.abs(user - expected) / Math.abs(expected) < 1e-4) return true;
+    return round2(user) === round2(expected);
   }
 
   /* =========================================================

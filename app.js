@@ -493,6 +493,7 @@
         <span class="unit-label">${q.unit}</span>
         <button class="btn btn-primary" id="check-answer">Controlla</button>
       </div>
+      <p class="numeric-hint">Puoi usare la virgola e arrotondare alla seconda cifra decimale.</p>
       <div class="feedback-slot"></div>
     `;
     const input = document.getElementById("num-answer");
