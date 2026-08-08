@@ -110,7 +110,7 @@ body {
   justify-content: center;
 }
 
-.nav-btn {
+.tab-btn {
   border: none;
   background: transparent;
   color: var(--text-soft);
@@ -121,9 +121,10 @@ body {
   border-radius: 999px;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
-.nav-btn:hover { background: var(--bg-soft); color: var(--text); }
-.nav-btn.is-active { background: var(--primary); color: #fff; }
+.tab-btn:hover { background: var(--bg-soft); color: var(--text); }
+.tab-btn.is-active { background: var(--primary); color: #fff; }
 
 .theme-toggle {
   border: 1px solid var(--border);
@@ -146,13 +147,45 @@ main {
   padding: 2rem 1.2rem 4rem;
 }
 
-.section { display: none; animation: fadeIn 0.35s ease; }
-.section.is-active { display: block; }
+.tab-panel { display: none; animation: fadeIn 0.35s ease; }
+.tab-panel.is-active { display: block; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ---------------- Sottoschede ---------------- */
+.subnav {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin: 0 0 1.3rem;
+  padding: 0.35rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.subnav-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex: 1;
+  min-width: max-content;
+  white-space: nowrap;
+}
+.subnav-btn:hover { color: var(--text); background: var(--bg-soft); }
+.subnav-btn.is-active { background: var(--primary); color: #fff; }
+
+.sub-panel { display: none; animation: fadeIn 0.3s ease; }
+.sub-panel.is-active { display: block; }
 
 h1 {
   font-size: clamp(1.6rem, 4vw, 2.3rem);
@@ -533,12 +566,39 @@ html[data-theme="dark"] .highlight-card { background: var(--surface-2); }
   border-top: 1px solid var(--border);
 }
 
+/* ---------------- Avvio quiz / esercizi ---------------- */
+.quiz-start { text-align: center; padding: 1rem 0.5rem; }
+.quiz-start h2 { margin-bottom: 0.6rem; }
+.quiz-start-desc { color: var(--text-soft); max-width: 55ch; margin: 0 auto 1.2rem; }
+
+/* ---------------- Esercizi guidati ---------------- */
+.guided-tools { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.btn-sm { font-size: 0.88rem; padding: 0.45rem 0.9rem; }
+.guided-reveal {
+  background: var(--surface-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 0.7rem 1rem;
+  margin: 0 0 0.8rem;
+  font-size: 0.95rem;
+  animation: fadeIn 0.25s ease;
+}
+
+/* ---------------- Stati risposta aggiuntivi ---------------- */
+.answer-btn.chosen { background: var(--primary-soft); border-color: var(--primary); font-weight: 700; }
+.review-item.ok { border-left-color: var(--success); }
+.review-your .ok-text { color: var(--success); font-weight: 700; }
+
+.quiz-summary-inner { text-align: center; animation: fadeIn 0.3s ease; }
+.quiz-summary-inner .review-block { text-align: left; }
+
 /* ---------------- Responsive ---------------- */
 @media (max-width: 640px) {
   .main-nav { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; }
-  .nav-btn { white-space: nowrap; }
   .measure-number { font-size: 2.2rem; }
   .compare-grid { grid-template-columns: 1fr; }
+  .subnav { flex-wrap: nowrap; overflow-x: auto; border-radius: var(--radius-sm); }
+  .subnav-btn { flex: 0 0 auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {

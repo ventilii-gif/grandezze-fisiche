@@ -1,20 +1,26 @@
 # Grandezze Fisiche 📏
 
-Web app didattica in italiano per ragazzi di ~15 anni, per imparare:
+Web app didattica in italiano per ragazzi di ~15 anni, organizzata in **schede e sottoschede**.
 
-- **il concetto di grandezza fisica** e le 7 unità fondamentali del Sistema Internazionale;
-- **multipli e sottomultipli** e le equivalenze «lineari» (fattore 10);
-- **aree e volumi**, capendo *perché* i gradini valgono ×100 e ×1000 (e il legame con i litri);
-- **grandezze derivate**: densità e velocità (più forza, pressione, portata, accelerazione).
+## Schede
 
-Include una **sezione quiz di allenamento** con feedback incoraggianti:
+1. **Introduzione** — che cos'è una grandezza fisica, le 7 unità fondamentali del SI e una **nota storica** (dal metro della Rivoluzione francese alle unità definite dalle costanti della natura nel 2019).
+2. **Unità fondamentali** — multipli/sottomultipli ed equivalenze «lineari» (fattore 10).
+3. **Aree** — perché i gradini valgono ×100.
+4. **Volumi** — perché i gradini valgono ×1000, e il legame con i litri.
+5. **Grandezze derivate** — densità, velocità, e altre (forza, pressione, portata, energia, potenza, accelerazione).
+6. **Quiz riepilogativo finale** — 15 domande miste su tutto, con **correzione alla fine** (come una verifica).
 
-- **Teoria** — domande a risposta multipla con richiamo dei concetti chiave;
-- **Esercizi graduati** (facile / medio / difficile) sulle equivalenze nelle tre aree:
-  unità fondamentali, aree e volumi, grandezze derivate;
-- **Misto** — un po' di tutto.
+## Le 4 sottoschede (schede 2–5)
 
-Gli esercizi numerici sono **generati casualmente**, quindi l'allenamento è praticamente infinito.
+- **Teoria** — i concetti spiegati con esempi.
+- **Simulazione** — un convertitore interattivo per «giocare» con le equivalenze.
+- **Esercizi guidati** — esercizi graduati (facile→difficile) con **suggerimento** e **passaggi** svelabili.
+- **10 quiz** — dieci domande con **risposta immediata e incoraggiante** e spiegazione.
+
+Gli esercizi numerici sono **generati casualmente** (allenamento praticamente infinito) e accettano
+la risposta esatta o quella **arrotondata alla seconda cifra decimale**. Il miglior punteggio di ogni
+quiz viene salvato nel browser.
 
 ## Tema chiaro e scuro 🌙☀️
 

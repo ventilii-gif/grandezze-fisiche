@@ -337,12 +337,39 @@
   const AREA_F = { "km²": 1e6, "hm²": 1e4, "dam²": 1e2, "m²": 1, "dm²": 1e-2, "cm²": 1e-4, "mm²": 1e-6 };
   const VOL_F = { "km³": 1e9, "m³": 1, "dm³": 1e-3, "cm³": 1e-6, "mm³": 1e-9 };
 
-  function genAreaVolume(difficulty) {
-    // includi anche i litri nel livello medio/difficile
-    const useLiters = difficulty !== "facile" && Math.random() < 0.35;
+  // Generatore generico per una scala di unità con un fattore costante.
+  function genScale(difficulty, units, F, tag, dimLabel) {
+    let maxStep, value;
+    if (difficulty === "facile") { maxStep = 2; value = pick([2, 3, 5, 4, 1.5]); }
+    else if (difficulty === "medio") { maxStep = 3; value = pick([2.5, 3.4, 0.5, 12, 7, 0.25]); }
+    else { maxStep = units.length - 1; value = pick([1250, 0.045, 850, 3.6, 0.008]); }
 
-    if (useLiters) {
-      // conversioni litri <-> volumi
+    let i = rndInt(0, units.length - 1), j;
+    do {
+      const lo = Math.max(0, i - maxStep), hi = Math.min(units.length - 1, i + maxStep);
+      j = rndInt(lo, hi);
+    } while (j === i);
+
+    const from = units[i], to = units[j];
+    const result = value * (F[from] / F[to]);
+    return {
+      type: "numeric",
+      tag,
+      prompt: `Converti: <strong>${fmt(value)} ${from}</strong> = ? ${to}`,
+      unit: to,
+      answer: result,
+      why: `${dimLabel} ${fmt(value)} ${from} = <strong>${fmt(result)} ${to}</strong>.`
+    };
+  }
+
+  function genArea(difficulty) {
+    return genScale(difficulty, AREA_UNITS, AREA_F, "Aree",
+      "Le aree cambiano di ×100 a ogni gradino (2 dimensioni).");
+  }
+
+  function genVolume(difficulty) {
+    // includi anche i litri nel livello medio/difficile
+    if (difficulty !== "facile" && Math.random() < 0.4) {
       const pairs = [
         { a: "L", b: "dm³", f: 1 }, { a: "mL", b: "cm³", f: 1 },
         { a: "L", b: "cm³", f: 1000 }, { a: "m³", b: "L", f: 1000 },
@@ -357,42 +384,15 @@
       const result = value * factor;
       return {
         type: "numeric",
-        tag: "Aree e volumi",
+        tag: "Volumi",
         prompt: `Converti (capacità/volume): <strong>${fmt(value)} ${from}</strong> = ? ${to}`,
         unit: to,
         answer: result,
         why: `Ricorda: 1 L = 1 dm³, 1 mL = 1 cm³, 1 m³ = 1000 L. Quindi ${fmt(value)} ${from} = <strong>${fmt(result)} ${to}</strong>.`
       };
     }
-
-    const isArea = Math.random() < 0.5;
-    const units = isArea ? AREA_UNITS : VOL_UNITS;
-    const F = isArea ? AREA_F : VOL_F;
-    const perStep = isArea ? 100 : 1000;
-
-    let maxStep, value;
-    if (difficulty === "facile") { maxStep = 2; value = pick([2, 3, 5, 4, 1.5]); }
-    else if (difficulty === "medio") { maxStep = 3; value = pick([2.5, 3.4, 0.5, 12, 7, 0.25]); }
-    else { maxStep = units.length - 1; value = pick([1250, 0.045, 850, 3.6, 0.008]); }
-
-    let i = rndInt(0, units.length - 1), j;
-    do {
-      const lo = Math.max(0, i - maxStep), hi = Math.min(units.length - 1, i + maxStep);
-      j = rndInt(lo, hi);
-    } while (j === i);
-
-    const from = units[i], to = units[j];
-    const result = value * (F[from] / F[to]);
-    const dim = isArea ? "area (fattore 100 per gradino)" : "volume (fattore 1000 per gradino)";
-
-    return {
-      type: "numeric",
-      tag: "Aree e volumi",
-      prompt: `Converti (${isArea ? "area" : "volume"}): <strong>${fmt(value)} ${from}</strong> = ? ${to}`,
-      unit: to,
-      answer: result,
-      why: `Stiamo lavorando con un ${dim}. ${fmt(value)} ${from} = <strong>${fmt(result)} ${to}</strong>.`
-    };
+    return genScale(difficulty, VOL_UNITS, VOL_F, "Volumi",
+      "I volumi cambiano di ×1000 a ogni gradino (3 dimensioni).");
   }
 
   // --- Grandezze derivate ---
@@ -566,34 +566,72 @@
     });
   }
 
+  // Mappa argomento -> generatore di esercizi numerici
+  const TOPIC_GEN = {
+    fondamentali: genLinear,
+    aree: genArea,
+    volumi: genVolume,
+    derivate: genDerived
+  };
+
+  // Suggerimento (strategia) mostrato negli esercizi guidati passo-passo
+  const HINTS = {
+    fondamentali: "Conta di quanti gradini ti sposti sulla scala dei prefissi: verso unità più piccole moltiplichi (×10 a gradino), verso unità più grandi dividi.",
+    aree: "Le aree hanno 2 dimensioni: ogni gradino vale ×100 (o ÷100). Conta i gradini e moltiplica/dividi per 100 ogni volta.",
+    volumi: "I volumi hanno 3 dimensioni: ogni gradino vale ×1000 (o ÷1000). Ricorda anche: 1 L = 1 dm³, 1 mL = 1 cm³.",
+    derivate: "Parti dalla formula della grandezza (es. v = Δs/Δt, d = m/V) e ragiona sulle unità: spesso basta moltiplicare o dividere per un fattore fisso."
+  };
+
+  // ---- Esercizi graduati GUIDATI (con suggerimento e passaggi svelabili) ----
+  function buildGuided(topic) {
+    const gen = TOPIC_GEN[topic] || genLinear;
+    const plan = ["facile", "facile", "medio", "medio", "difficile"];
+    return plan.map((d, i) => {
+      const q = gen(d);
+      return Object.assign({}, q, {
+        level: d,
+        index: i + 1,
+        total: plan.length,
+        hint: HINTS[topic] || "",
+        steps: q.why
+      });
+    });
+  }
+
+  // ---- 10 quiz specifici per scheda (feedback immediato) ----
+  function buildTopicQuiz(topic) {
+    const gen = TOPIC_GEN[topic] || genLinear;
+    const plan = ["facile", "facile", "facile", "medio", "medio", "medio", "medio", "difficile", "difficile", "difficile"];
+    return plan.map((d) => gen(d));
+  }
+
+  // ---- Quiz riepilogativo finale (misto, correzione alla fine) ----
+  function buildFinalQuiz(n) {
+    const total = n || 15;
+    const gens = [genLinear, genArea, genVolume, genDerived];
+    const diffs = ["facile", "medio", "difficile"];
+    const numericCount = total - 3; // 3 domande di teoria
+    const out = [];
+    for (let i = 0; i < numericCount; i++) out.push(pick(gens)(pick(diffs)));
+    out.push(...buildTheory().slice(0, 3));
+    return shuffle(out);
+  }
+
+  // Compatibilità: quiz per argomento/difficoltà (usato internamente se serve)
   function buildQuiz(topic, difficulty) {
     if (topic === "teoria") return buildTheory();
-
-    const generators = {
-      fondamentali: genLinear,
-      "aree-volumi": genAreaVolume,
-      derivate: genDerived
-    };
-
+    const gen = TOPIC_GEN[topic] || genLinear;
     const out = [];
-    if (topic === "misto") {
-      const gens = [genLinear, genAreaVolume, genDerived];
-      // includi anche qualche domanda di teoria nel misto
-      const theory = buildTheory();
-      for (let k = 0; k < N_QUESTIONS; k++) {
-        if (k % 4 === 3) out.push(theory[k % theory.length]);
-        else out.push(pick(gens)(difficulty));
-      }
-      return out;
-    }
-
-    const gen = generators[topic] || genLinear;
     for (let k = 0; k < N_QUESTIONS; k++) out.push(gen(difficulty));
     return out;
   }
 
   window.QuizEngine = {
     buildQuiz,
+    buildTheory,
+    buildGuided,
+    buildTopicQuiz,
+    buildFinalQuiz,
     parseUser,
     isCorrectNumeric,
     fmt,
