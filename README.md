@@ -1,47 +1,37 @@
-# Grandezze Fisiche 📏
+# Grandezze Fisiche
 
-Web app didattica in italiano per ragazzi di ~15 anni, organizzata in **schede e sottoschede**.
+Web app didattica in italiano per il liceo (biennio): le basi della misura in fisica.
+Pubblicata su **grandezze-fisiche.ventilii.ai**.
+
+## Architettura
+
+- **Un unico file `index.html`** autocontenuto (HTML + CSS + JS inline), senza build.
+- Formule in **KaTeX** (via CDN), tema **chiaro e scuro** con interruttore e senza flash.
+- Palette blu/ambra accessibile ai daltonici (nessuna coppia rosso/verde), stati corretto/errato
+  anche con icone ✓/✕.
 
 ## Schede
 
-1. **Introduzione** — che cos'è una grandezza fisica, le 7 unità fondamentali del SI e una **nota storica** (dal metro della Rivoluzione francese alle unità definite dalle costanti della natura nel 2019).
-2. **Unità fondamentali** — multipli/sottomultipli ed equivalenze «lineari» (fattore 10).
-3. **Aree** — perché i gradini valgono ×100.
-4. **Volumi** — perché i gradini valgono ×1000, e il legame con i litri.
-5. **Grandezze derivate** — densità, velocità, e altre (forza, pressione, portata, energia, potenza, accelerazione).
-6. **Quiz riepilogativo finale** — 15 domande miste su tutto, con **correzione alla fine** (come una verifica).
+1. **Introduzione** — grandezza fisica, 7 unità del SI, nota storica.
+2. **Unità fondamentali** — multipli/sottomultipli ed equivalenze (fattore 10).
+3. **Aree** — fattore ×100.
+4. **Volumi** — fattore ×1000 e litri.
+5. **Grandezze derivate** — densità, velocità, forza, pressione, portata, energia, potenza, accelerazione.
+6. **Notazione scientifica** — \(a\times10^n\).
+7. **Ordine di grandezza** — la potenza di 10 più vicina.
+8. **Misura e incertezze** — \(x=(V\pm\Delta V)\), errore assoluto/relativo/percentuale.
+9. **Strumenti di misura** — portata, sensibilità, incertezza.
+10. **Errori nelle misure** — errori casuali/sistematici, misure dirette e indirette, **propagazione**
+    (somma/differenza: errori assoluti; prodotto/quoziente: errori relativi).
+11. **Quiz finale** — 15 domande miste con correzione alla fine.
 
-## Le 4 sottoschede (schede 2–5)
+## Le quattro sotto-schede (schede 2–10)
 
-- **Teoria** — i concetti spiegati con esempi.
-- **Simulazione** — un convertitore interattivo per «giocare» con le equivalenze.
-- **Esercizi guidati** — esercizi graduati (facile→difficile) con **suggerimento** e **passaggi** svelabili.
-- **10 quiz** — dieci domande con **risposta immediata e incoraggiante** e spiegazione.
+- **Teoria** — concetti ed esempi.
+- **Simulazione** — strumento interattivo (convertitore, calcolatrice di propagazione, righello, ecc.).
+- **Esercizi guidati** — esercizi graduati con suggerimento e passaggi.
+- **Quiz** — dieci domande a risposta immediata, con navigazione «Precedente» (le domande già
+  risposte restano bloccate in sola lettura).
 
-Gli esercizi numerici sono **generati casualmente** (allenamento praticamente infinito) e accettano
-la risposta esatta o quella **arrotondata alla seconda cifra decimale**. Il miglior punteggio di ogni
-quiz viene salvato nel browser.
-
-## Tema chiaro e scuro 🌙☀️
-
-Lo studente sceglie la modalità **giorno** (chiara) o **notte** (scura) con il pulsante in alto
-a destra. La preferenza viene ricordata e, al primo avvio, viene rispettata l'impostazione
-del sistema operativo.
-
-## Come si usa
-
-È un sito statico: nessuna installazione, nessun server necessario.
-
-- Apri direttamente il file `index.html` con un browser, **oppure**
-- pubblicalo con GitHub Pages (Settings → Pages → branch → `/root`).
-
-## Struttura del progetto
-
-| File | Contenuto |
-|------|-----------|
-| `index.html` | Struttura e contenuti didattici delle sezioni |
-| `styles.css` | Stile e temi giorno/notte (variabili CSS) |
-| `quiz.js` | Motore del quiz: banca di teoria e generatori di esercizi |
-| `app.js` | Navigazione, tema, convertitori interattivi, logica quiz |
-
-Tutto in italiano, senza dipendenze esterne.
+Gli esercizi numerici sono generati casualmente e accettano la risposta esatta o quella
+arrotondata alla seconda cifra decimale. I record vengono salvati nel browser.
