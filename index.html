@@ -448,14 +448,14 @@ footer{text-align:center;padding:1.5rem 1rem;color:var(--text-soft);font-size:.8
         <p>L'<strong>ordine di grandezza</strong> di un numero è la potenza di 10 a cui il numero <strong>più si avvicina</strong>. Serve per confrontare rapidamente quantità molto diverse.</p>
         <p>Scrivi il numero come \(a\times 10^{n}\) (con \(1\le a<10\)) e poi:</p>
         <ul class="rules">
-          <li>se \(a<\sqrt{10}\approx 3{,}16\) → l'ordine è \(10^{n}\);</li>
-          <li>se \(a\ge\sqrt{10}\approx 3{,}16\) → l'ordine è \(10^{n+1}\).</li>
+          <li>se \(a<5\) → l'ordine è \(10^{n}\) (arrotondi per difetto);</li>
+          <li>se \(a\ge 5\) → l'ordine è \(10^{n+1}\) (arrotondi per eccesso).</li>
         </ul>
       </div>
       <div class="card">
         <h2>Esempi</h2>
-        <div class="worked"><p class="t">450</p><p>450 = 4,5 × 10². Poiché 4,5 ≥ 3,16, l'ordine è \(10^{3}\).</p></div>
-        <div class="worked"><p class="t">2500</p><p>2500 = 2,5 × 10³. Poiché 2,5 &lt; 3,16, l'ordine è \(10^{3}\).</p></div>
+        <div class="worked"><p class="t">450</p><p>450 = 4,5 × 10². Poiché 4,5 &lt; 5, l'ordine è \(10^{2}\).</p></div>
+        <div class="worked"><p class="t">7000</p><p>7000 = 7 × 10³. Poiché 7 ≥ 5, l'ordine è \(10^{4}\).</p></div>
         <p class="note">Un uomo è alto \(\sim 10^0\) m, la Terra ha raggio \(\sim 10^7\) m, un atomo \(\sim 10^{-10}\) m.</p>
       </div>
     </div>
@@ -685,13 +685,13 @@ function genNotazione(d){
     `Si sposta la virgola di ${Math.abs(n)} posti: ${plain(coeff)} × 10^${n} = ${plain(dec)}.`);
 }
 /* -------- ordine di grandezza -------- */
-function orderOfMag(x){const {a,n}=sciParts(x);return a>=Math.sqrt(10)?n+1:n;}
+function orderOfMag(x){const {a,n}=sciParts(x);return a>=5?n+1:n;}
 function genOrdine(d){
   const coeff=pick([1.2,2.5,3.4,4.5,5.6,7.8,9.1,2.9,3.1]);
   const exps=d==="facile"?[1,2,3,-1,-2]:d==="medio"?[3,4,5,-3,-4,0]:[6,7,8,-5,-6,-7];
   const n=pick(exps);const x=coeff*Math.pow(10,n);const om=orderOfMag(x);
   return numQ("Ordine di grandezza",`Qual è l'ordine di grandezza di ${plain(round2(x))}? Rispondi con l'esponente di 10.`,"(esponente)",om,
-    `${plain(round2(x))} ≈ ${fmt(coeff)} × 10^${n}. Poiché ${fmt(coeff)} ${coeff>=Math.sqrt(10)?"≥":"<"} 3,16, l'ordine di grandezza è 10^${om}.`);
+    `${plain(round2(x))} ≈ ${fmt(coeff)} × 10^${n}. Poiché ${fmt(coeff)} ${coeff>=5?"≥":"<"} 5, l'ordine di grandezza è 10^${om}.`);
 }
 /* -------- misura e incertezze -------- */
 function genMisura(d){
@@ -741,7 +741,7 @@ const HINTS={
   volumi:"I volumi hanno 3 dimensioni: ogni gradino vale ×1000. Ricorda 1 L = 1 dm³, 1 mL = 1 cm³.",
   derivate:"Parti dalla formula (es. v = Δs/Δt, d = m/V) e ragiona sulle unità: spesso basta un fattore fisso.",
   notazione:"Sposta la virgola finché davanti resta una sola cifra: il numero di spostamenti è l'esponente (positivo se il numero è grande, negativo se piccolo).",
-  ordine:"Scrivi il numero come a × 10ⁿ: se a < 3,16 l'ordine è 10ⁿ, altrimenti 10^(n+1).",
+  ordine:"Scrivi il numero come a × 10ⁿ: se a < 5 l'ordine è 10ⁿ, se a ≥ 5 l'ordine è 10^(n+1).",
   misura:"Errore relativo = ΔV ÷ V; per la percentuale moltiplica per 100.",
   strumenti:"L'incertezza di una misura singola è pari alla sensibilità dello strumento.",
   errori:"Somma/differenza: somma gli errori assoluti. Prodotto/quoziente: somma gli errori relativi, poi moltiplica per il risultato."
@@ -767,8 +767,8 @@ const THEORY=[
   {t:"notazione",q:"Come si scrive 0,0045 in notazione scientifica?",o:["4,5 × 10⁻³","4,5 × 10³","45 × 10⁻³","4,5 × 10⁻²"],c:0,w:"La virgola va spostata di 3 posti verso destra: esponente −3."},
   {t:"notazione",q:"Quanto vale 2 × 10⁵ in forma decimale?",o:["200 000","20 000","2 000 000","0,00002"],c:0,w:"2 × 10⁵ = 2 seguito da 5 zeri = 200 000."},
   {t:"ordine",q:"L'ordine di grandezza di un numero è…",o:["la potenza di 10 più vicina","la prima cifra","la mantissa","il doppio del numero"],c:0,w:"È la potenza di 10 a cui il numero più si avvicina."},
-  {t:"ordine",q:"Qual è l'ordine di grandezza di 450?",o:["10³","10²","10⁴","10¹"],c:0,w:"450 = 4,5 × 10²; poiché 4,5 ≥ 3,16, l'ordine è 10³."},
-  {t:"ordine",q:"Qual è l'ordine di grandezza di 2500?",o:["10³","10⁴","10²","10⁵"],c:0,w:"2500 = 2,5 × 10³; poiché 2,5 < 3,16, l'ordine è 10³."},
+  {t:"ordine",q:"Qual è l'ordine di grandezza di 450?",o:["10³","10²","10⁴","10¹"],c:1,w:"450 = 4,5 × 10²; poiché 4,5 < 5, l'ordine è 10²."},
+  {t:"ordine",q:"Qual è l'ordine di grandezza di 8000?",o:["10⁴","10³","10⁵","10²"],c:0,w:"8000 = 8 × 10³; poiché 8 ≥ 5, l'ordine è 10⁴."},
   {t:"misura",q:"Come si scrive il risultato di una misura?",o:["(V ± ΔV) unità","solo V","solo ΔV","V × ΔV"],c:0,w:"Valore ± incertezza, con l'unità: es. (20,0 ± 0,5) cm."},
   {t:"misura",q:"L'errore relativo si calcola come…",o:["ΔV / V","V / ΔV","ΔV × V","ΔV − V"],c:0,w:"È il rapporto fra incertezza assoluta e valore; è un numero puro."},
   {t:"misura",q:"Una misura con errore relativo più piccolo è…",o:["più precisa","meno precisa","sbagliata","più grande"],c:0,w:"Più piccolo è l'errore relativo, migliore è la misura."},
@@ -886,7 +886,7 @@ buildDerivedConverter("sim-derivate",{
 })();
 // Ordine di grandezza
 (function(){const m=document.getElementById("sim-ordine");if(!m)return;
-  m.innerHTML=`<div class="sim-row"><div class="field"><label>Scrivi un numero</label><input type="number" inputmode="decimal" value="450" step="any" data-v></div></div><div class="sim-out" data-out aria-live="polite"></div><p class="sim-note">Regola: scrivi a × 10ⁿ; se a &lt; 3,16 l'ordine è 10ⁿ, altrimenti 10ⁿ⁺¹.</p>`;
+  m.innerHTML=`<div class="sim-row"><div class="field"><label>Scrivi un numero</label><input type="number" inputmode="decimal" value="450" step="any" data-v></div></div><div class="sim-out" data-out aria-live="polite"></div><p class="sim-note">Regola: scrivi a × 10ⁿ; se a &lt; 5 l'ordine è 10ⁿ, se a ≥ 5 l'ordine è 10ⁿ⁺¹.</p>`;
   const v=m.querySelector("[data-v]"),out=m.querySelector("[data-out]");
   function up(){const x=parseFloat(v.value);if(!isFinite(x)||x===0){out.textContent="Inserisci un numero diverso da zero.";return;}const {a,n}=sciParts(x),om=orderOfMag(x);out.innerHTML=`${plain(x)} ≈ ${fmt(round2(a))} × 10<sup>${n}</sup> → ordine di grandezza <strong>10<sup>${om}</sup></strong>`;}
   v.addEventListener("input",up);up();
